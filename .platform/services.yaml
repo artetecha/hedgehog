@@ -1,0 +1,6 @@
+postgres:
+  type: postgresql:9.6
+  disk: 1024
+  configuration:
+    extensions:
+      - uuid-ossp

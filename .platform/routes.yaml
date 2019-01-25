@@ -1,0 +1,3 @@
+"https://hedgehog.{all}/":
+  type: upstream
+  upstream: "hedgehog-api:http"
