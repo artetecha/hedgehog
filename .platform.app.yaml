@@ -1,0 +1,33 @@
+name: hedgehog-api
+type: nodejs:10
+build:
+  flavor: none
+
+dependencies:
+  nodejs:
+    pm2: "^3.0"
+    yarn: "*"
+
+hooks:
+  build: |
+    yarn install
+  deploy: |
+    yarn command:schema
+  post_deploy: |
+    yarn command:seed --authors 50 --metas 50 --media 50
+
+relationships:
+  pg: "postgres:postgresql"
+
+web:
+  commands:
+    start: "PM2_HOME=$PLATFORM_APP_DIR/run pm2 start node_modules/.bin/postgraphile --no-daemon --name hedgehog"
+    # In this setup you will find your application stdout and stderr in /app/run/logs
+
+mounts:
+  "/run": "shared:files/run"
+  "/.config": "shared:files/.config"
+  "/.pm2": "shared:files/.pm2"
+  "/.cache": "shared:files/.cache"
+
+disk: 1024

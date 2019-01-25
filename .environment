@@ -1,0 +1,5 @@
+# The .environment is one of many ways to set environment variables on Platform.sh
+# Specifically, is the source that is applied as last, so whatever variable is set
+# here is final, and will override other versions of the same variable set elsewhere.
+
+export NODE_ENV=$(if [ "$PLATFORM_BRANCH" = "$(echo $PLATFORM_BRANCH | grep -E '^(pr-[0-9]+)$')" ]; then echo "development"; else echo "production"; fi)
